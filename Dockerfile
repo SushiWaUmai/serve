@@ -1,5 +1,5 @@
 FROM golang:alpine AS builder
-WORKDIR /app
+WORKDIR /
 
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
@@ -8,8 +8,8 @@ COPY . .
 RUN go build
 
 FROM alpine as runner
-WORKDIR /app
+WORKDIR /
 
-COPY --from=builder /app/serve .
+COPY --from=builder /serve .
 
 CMD ["./serve"]
